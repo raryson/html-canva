@@ -6,6 +6,8 @@ let alturaTriangulo = 0
 let larguraTriangulo = 0
 let angulo = 0
 var cor 
+var grad1
+var grad2
 const ctxElement = document.querySelector("#canva")
 const ctx = ctxElement.getContext("2d")
 
@@ -41,6 +43,23 @@ function PintarForma() {
     cor = document.querySelector("#Color").value
     document.querySelector("#Color").value = ""
     ctx.fillStyle = cor
+    ctx.fill()
+}
+
+function GradPintar() {
+    grad1 = document.querySelector("#ColorGrad1").value
+    document.querySelector("#ColorGrad1").value = ""
+    grad2 = document.querySelector("#ColorGrad2").value
+    document.querySelector("#ColorGrad2").value = ""
+
+    
+    var grd = ctx.createRadialGradient(55, 35, 10, 65, 45, 60 );
+
+    grd.addColorStop(0, grad1)
+    grd.addColorStop(1, grad2)
+    
+    
+    ctx.fillStyle = grd
     ctx.fill()
 }
 
