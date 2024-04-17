@@ -7,8 +7,21 @@
 </head>
 <body>
     <h1>Trabalho dos guri</h1>
-    <canvas width="400" height="400"  style="border:1px solid #000000;" id="canva"></canvas>
+    <canvas width="800" height="400"  style="border:1px solid #000000;" id="canva"></canvas>
     </br>
+
+    <h3>Posição inicial</h3>
+    <label for="ponto-inicial">Defina a posição Inicial:</label>
+    <input type="number" name="ponto-inicial" id="ponto-inicial"></input>
+    <button onclick="DesenhaInicio()">Definir Início</button>
+    </br>
+
+    <h3>Cor</h3>
+    <label for="Color">Escolha uma Cor:</label>
+    <input type="color" name="Color" id="Color"></input>
+    <button onclick="PintarForma()">Selecionar Cor</button> 
+    </br>
+
     <h3>Retangulo</h3>
     <label for="retangulo-altura">Altura do Retangulo:</label>
     <input type="number" name="retangulo-altura" id="retangulo-altura"></input>
@@ -16,17 +29,55 @@
     <label for="retangulo-largura">Largura do Retangulo:</label>
     <input name="retangulo-largura" id="retangulo-largura" type="number"></input>
     <button onclick="desenhaRetangulo()">Desenha Retangulo</button>
+
     <h3>Circulo</h3>
     <label for="circulo-raio">Raio do Circulo:</label>
     <input type="number" name="circulo-raio" id="circulo-raio"></input>
     <button onclick="desenhaCirculo()">Desenha Circulo</button>
+
     <h3>Triangulo</h3>
-    <label for="triangulo-altura">Altura Triangulo:</label>
+    <label for="triangulo-altura">Altura Triangulo: </label>
     <input type="number" name="triangulo-altura" id="triangulo-altura"></input>
     </br>
     <label for="triangulo-largura">Largura Triangulo:</label>
     <input type="number" name="triangulo-largura" id="triangulo-largura"></input>
     <button onclick="desenhaTriangulo()">Desenha Triangulo</button>
+    </br>
+
+    <h3>Rotação</h3>
+    <label for="rotacionar">Defina um ângulo:</label>
+    <input type="number" name="rotacionar" id="rotacionar" min="0" max="360" ></input>
+    <select name="select-rotacao" id="select-rotacao">
+        <option value="retangulo" selected>Retangulo</option>
+        <option value="triangulo">Triangulo</option>
+        <option value="circulo">Circulo</option>
+      </select>
+    <button onclick="rotacaoforma()">Rotacionar</button>
+
+    <h3>Escalar</h3>
+    <label for="escalar-x">Quanto você quer escalar em X</label>
+    <input type="number" name="escalar-x" id="escalar-x" min="0" max="360" ></input>
+    <label for="escalar-y">Quanto você quer escalar em Y</label>
+    <input type="number" name="escalar-y" id="escalar-y" min="0" max="360" ></input>
+    <select name="select-escalar" id="select-escalar">
+        <option value="retangulo" selected>Retangulo</option>
+        <option value="triangulo">Triangulo</option>
+        <option value="circulo">Circulo</option>
+      </select>
+    <button onclick="escalarForma()">Escalar</button>
+
+
+    <h3>Mover</h3>
+    <label for="ponto-mover-x">Digite quantos pixeis você quer mover em X:</label>
+    <input type="number" name="ponto-mover-x" id="ponto-mover-x"></input>
+    <label for="ponto-mover-y">Digite quantos pixeis você quer mover em Y:</label>
+    <input type="number" name="ponto-mover-y" id="ponto-mover-y"></input>
+    <select name="select-mover" id="select-mover">
+        <option value="retangulo" selected>Retangulo</option>
+        <option value="triangulo">Triangulo</option>
+        <option value="circulo">Circulo</option>
+    </select>
+    <button onclick="moverFunction()">Definir movimentação</button>
     </br>
 </br>
 

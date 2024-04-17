@@ -1,37 +1,104 @@
 let alturaRetangulo = 0
 let larguraRetangulo = 0
-let posicaoInicial = 10
+let posicaoInicial = 0
 let raioCirculo = 0
 let alturaTriangulo = 0
 let larguraTriangulo = 0
+let angulo = 0
+var cor 
 const ctxElement = document.querySelector("#canva")
 const ctx = ctxElement.getContext("2d")
 
-function desenhaRetangulo() {
-    alturaRetangulo = document.querySelector("#retangulo-altura").value
-    larguraRetangulo = document.querySelector("#retangulo-largura").value
-    document.querySelector("#retangulo-altura").value = ""
-    document.querySelector("#retangulo-largura").value = ""
-    ctx.fillStyle = 'red'
-    ctx.fillRect(posicaoInicial, posicaoInicial, larguraRetangulo, alturaRetangulo)
+function DesenhaInicio() {
+    ctx.reset()
+    posicaoInicial = document.querySelector("#ponto-inicial").value
+    document.querySelector("#ponto-inicial").value = ""
 }
 
-function desenhaCirculo() {
-    raioCirculo = document.querySelector("#circulo-raio").value
-    document.querySelector("#circulo-raio").value = ""
-    ctx.beginPath()
-    ctx.arc(posicaoInicial, posicaoInicial, raioCirculo, 0, 2 * Math.PI, false)
-    ctx.stroke()
-    ctx.fillStyle = 'blue'
+function rotacaoforma() {
+    ctx.reset()
+    angulo = parseInt(document.querySelector("#rotacionar").value)
+    document.querySelector("#rotacionar").value = ""
+    const formaSelecionada = document.querySelector('#select-rotacao').value
+    switch (formaSelecionada) {
+        case 'retangulo': {
+            desenhaRetangulo(angulo)
+            return
+        }
+        case 'triangulo': {
+            desenhaTriangulo(angulo)
+            return
+        }
+        case 'circulo': {
+            desenhaCirculo(angulo)
+            return
+        }
+    }
+}
+
+
+function PintarForma() {
+    cor = document.querySelector("#Color").value
+    document.querySelector("#Color").value = ""
+    ctx.fillStyle = cor
     ctx.fill()
 }
 
-function desenhaTriangulo() {
-    alturaTriangulo = Number(document.querySelector("#triangulo-altura").value) + posicaoInicial
-    document.querySelector("#triangulo-altura").value = ""
-    larguraTriangulo = Number(document.querySelector("#triangulo-largura").value) + posicaoInicial
-    console.log(alturaTriangulo, larguraTriangulo)
-    document.querySelector("#triangulo-largura").value = ""
+function desenhaRetangulo(angulo = 0, escala = 0, mover = 0) {
+    if (angulo != 0) {
+        rotacaoPuraLogica()
+    } else if ( escala != 0) {
+        escalaPuraLogica(escala.x, escala.y)
+    }
+    else if (mover != 0) {
+        ctx.translate(mover.x, mover.y) 
+    }
+    else {
+        alturaRetangulo = document.querySelector("#retangulo-altura").value
+        document.querySelector("#retangulo-altura").value = ""
+        larguraRetangulo = document.querySelector("#retangulo-largura").value
+        document.querySelector("#retangulo-largura").value = ""
+    }
+    ctx.rect(posicaoInicial, posicaoInicial, larguraRetangulo, alturaRetangulo)
+    ctx.stroke()
+    ctx.save()
+}
+
+function desenhaCirculo(angulo = 0, escala = 0, mover = 0) {
+    if (angulo != 0) {
+        rotacaoPuraLogica()
+    } else if ( escala != 0) {
+        escalaPuraLogica(escala.x, escala.y)
+    }
+    else if (mover != 0) {
+        ctx.translate(mover.x, mover.y) 
+    }
+    else {
+        raioCirculo = document.querySelector("#circulo-raio").value
+        document.querySelector("#circulo-raio").value = ""
+    }
+    ctx.beginPath()
+    ctx.arc(posicaoInicial, posicaoInicial, raioCirculo, 0, 2 * Math.PI, false)
+    ctx.stroke()
+    ctx.save()
+    
+}
+
+function desenhaTriangulo(angulo = 0, escala = 0, mover = 0) {
+    if (angulo != 0) {
+        rotacaoPuraLogica()
+    } else if ( escala != 0) {
+        escalaPuraLogica(escala.x, escala.y)
+    }
+    else if (mover != 0) {
+        ctx.translate(mover.x, mover.y) 
+    }
+    else {
+        alturaTriangulo = document.querySelector("#triangulo-altura").value + 0
+        document.querySelector("#triangulo-altura").value = ""
+        larguraTriangulo = document.querySelector("#triangulo-largura").value + 0
+        document.querySelector("#triangulo-largura").value = ""
+    }
     ctx.moveTo(posicaoInicial, posicaoInicial);
     ctx.lineTo(posicaoInicial, larguraTriangulo);
     ctx.stroke()
@@ -39,5 +106,63 @@ function desenhaTriangulo() {
     ctx.stroke()
     ctx.closePath()
     ctx.stroke()
+}
 
+function rotacaoPuraLogica() {
+    ctx.translate(posicaoInicial, posicaoInicial)
+    ctx.rotate(angulo * Math.PI / 180)
+    ctx.translate(-posicaoInicial, -posicaoInicial)
+}
+
+function escalaPuraLogica(x, y) {
+    ctx.translate(posicaoInicial, posicaoInicial)
+    ctx.scale(x, y)
+    ctx.translate(-posicaoInicial, -posicaoInicial)
+}
+
+function escalarForma() {
+    ctx.reset()
+    const escalarX = document.querySelector('#escalar-x').value
+    const escalarY = document.querySelector('#escalar-y').value
+    const escala = { x: escalarX, y: escalarY }
+    document.querySelector('#escalar-y').value = ''
+    document.querySelector('#escalar-x').value = ''
+    const formaEscala = document.querySelector('#select-escalar').value
+    switch (formaEscala) {
+        case 'retangulo': {
+            desenhaRetangulo(0, escala)
+            return
+        }
+        case 'triangulo': {
+            desenhaTriangulo(0, escala)
+            return
+        }
+        case 'circulo': {
+            desenhaCirculo(0, escala)
+            return
+        }
+    }
+}
+
+function moverFunction() {
+    ctx.reset()
+    const moverInputX = document.querySelector('#ponto-mover-x').value
+    document.querySelector('#ponto-mover-x').value = ""
+    const moverInputY = document.querySelector('#ponto-mover-y').value
+    document.querySelector('#ponto-mover-y').value = ""
+    const formaMovida = document.querySelector('#select-mover').value
+    switch (formaMovida) {
+        case 'retangulo': {
+            desenhaRetangulo(0, 0, {x: moverInputX, y: moverInputY})
+            return
+        }
+        case 'triangulo': {
+            desenhaTriangulo(0, 0, {x: moverInputX, y: moverInputY})
+            return
+        }
+        case 'circulo': {
+            desenhaCirculo(0, 0, {x: moverInputX, y: moverInputY})
+            return
+        }
+    }
 }
